@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+#MainDiv{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#hiddenupload{
+    display: none;
+}
+#LoginDiv p{
+    display: none;
+    border: 1px solid rgb(237, 131, 131);
+    min-width: 300px;
+    border-radius: 10px;
+    background-color: rgb(245, 224, 224);
+    font-family: 'Roboto', sans-serif;
+    justify-content: center;
+    align-items: center;
+    min-height: 30px;
+    box-shadow: 2px 2px gray;
+    padding: 20px;
+  }
+#Back{
+    min-width: 150px;
+    left: 10px;
+    top: 10px;
+    font-size: 25px;
+    border: 0px;
+    background-color: transparent;
+    position: absolute;
+    min-height: 50px;
+}
+#Back:active{
+    color: crimson;
+    transform: translateX(-10px);
+}
+#MainDiv h1 {
+   color: crimson; 
+    font-family: 'Lobster', sans-serif;
+}
+#LoginDiv{
+    margin-top: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 40px;
+    flex-direction: column;
+}
+#LoginDiv input {
+    min-width: 400px;
+    font-size: 20px;
+    outline: none;
+    border: 0px;
+    border-bottom :2px solid black;
+    
+    min-height: 50px;
+}
+#LoginDiv input:focus{
+    border-bottom: 3px solid green;
+}
+#LoginDiv button{
+    min-width: 120px;
+    border: 1px solid black;
+    border-radius: 10px ;
+    box-shadow: 5px 5px gray;
+    background-color: white;
+    min-height: 50px;
+    font-size: 20px;
+} 
+#LoginDiv button:active{
+    box-shadow: 1px 1px gray;
+    transform: translateY(4px);
+}
+
+#AddDiv{
+    margin-top: 70px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    gap: 30px;
+}
+#EnterTech1{
+    outline: none;
+    font-size: 20px;
+    min-height: 50px;
+    border: 0px;
+    border-bottom: 2px solid black;
+    min-width: 400px;
+}
+#EnterTech2{
+    outline: none;
+    font-size: 25px;
+    min-height: 50px;
+    border: 0px;
+    border-bottom: 2px solid black;
+   min-width: 500px;
+}
+#EnterTech3{
+    min-width: 500px;
+    outline: none;
+    font-size: 25px;
+    min-height: 50px;
+    border: 0px;
+    border-bottom: 2px solid black;
+   
+}
+#TechnoDiv{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 20px;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+#TechnoDiv input {
+    min-width: 500px;
+    outline: none;
+    font-size: 25px;
+    min-height: 50px;
+    border: 0px;
+    border-bottom: 2px solid black;
+}
+#TechDiv{
+   justify-content: center;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+#TechDiv button{
+    min-width: 100px;
+    min-height: 50px;
+    font-size: 20px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 2px 2px gray;
+}
+#TechDiv button:active{
+    box-shadow: 1px 1px gray;
+    transform: translateY(2px);
+}
+#ProjectDiv label {
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+}
+#ProjectDiv {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    font-family: 'Roboto', sans-serif;
+    align-items: center;
+    flex-direction: column;
+}
+
+#Clear {
+    top: 10px;
+    border: 0px;
+    background-color: white;
+    font-size: 30px;
+    right: 30px;
+    position: absolute;
+}
+#upload{
+    border-radius: 10px;
+    min-width: 120px;
+    padding: 20px;
+    font-size: 20px;
+    background-color: white;
+    box-shadow: 3px 3px gray;
+    border: 2px solid black;
+}
+#upload:active{
+    padding: 19px;
+    color: crimson;
+    transform: translateY(2px);
+    box-shadow: 2px 2px gray;
+}
+#upload2{
+    border-radius: 10px;
+    min-width: 120px;
+    padding: 20px;
+    display: none;
+    font-size: 20px;
+    background-color: white;
+    box-shadow: 3px 3px gray;
+    border: 2px solid black;
+}
+#upload2:active{
+    padding: 19px;
+    color: crimson;
+    transform: translateY(2px);
+    box-shadow: 2px 2px gray;
+}
+#upload input {
+    min-width: 500px;
+}
+
+#imgdiv img{
+    display: none;
+   max-width: 100%;
+   object-fit: scale-down;
+}
+#List {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+#List button{
+    font-size: 20px;
+    border: 0px;
+   background-color: white;
+}
+#List button:active{
+    color: crimson;
+}
+#AddBtn{
+    min-width: 120px;
+    min-height: 50px;
+    font-size: 25px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 3px 3px gray;
+}
+#AddBtn:active{
+    box-shadow: 1px 1px gray;
+    transform: translateY(2px);
+}
+@media screen and (max-width:500px) {
+   #TechDiv{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+   }
+   #EnterTech1{
+    min-width: 90%;
+   }
+   #EnterTech2{
+    min-width: 90%;
+   }
+   #EnterTech3{
+    min-width: 90%;
+   }
+   #TechnoDiv input {
+    min-width: 90%;
+    border-bottom: 2px solid rebeccapurple;
+   }
+   #MainDiv h1 {
+    margin-top: 80px;
+   }
+   #LoginDiv input {
+    min-width: 90%;
+   }
+}
