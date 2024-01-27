@@ -14,10 +14,12 @@ export default function Home() {
     if (name == "about"){
       document.getElementById(styles.Options).style.display = "none"
       document.getElementById(styles.About).scrollIntoView();
+      changetext("Options")
     }
     if (name == 'project'){
       document.getElementById(styles.Options).style.display = "none"
       document.getElementById(styles.Projects).scrollIntoView();
+      changetext("Options")
     }
   }
   // Function To Open options Tab 
