@@ -127,15 +127,32 @@
   padding: 20px;
   border-radius: 5px;
   display: flex;
-  box-shadow: 3px 3px gray;
+  box-shadow: 4px 4px gray;
   flex-direction: column;
   
+}
+#Project:active{
+  box-shadow: 1px 1px gray;
 }
 #Project img {
   max-width: 500px;
 }
 #ProjectDetails{
   font-family: 'Roboto', sans-serif;
+}
+
+#TechnoDiv{
+  margin-top: 100px;
+  margin-bottom: 100px;
+  display: flex;
+  min-width: 100%;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+}
+#TechnoDiv li {
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
 @media  screen and (max-width:900px) {

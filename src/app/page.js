@@ -73,6 +73,19 @@ export default function Home() {
       </div>
     </div>
 
+    <div id = {styles.TechnoDiv}>
+      <h1>Technologies i Known</h1>
+      <ul>
+        <li>ReactJS</li>
+        <li>NodeJS</li>
+        <li>MongoDB</li>
+        <li>NextJS</li>
+        <li>ExpressJS</li>
+        <li>FireBase</li>
+        <li>NextAuth.js</li>
+      </ul>
+    </div>
+
     <div id = {styles.Projects}>
       <h1>Projects</h1>
       <div id = {styles.ProjectList}>
