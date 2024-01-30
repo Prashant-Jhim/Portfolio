@@ -5,62 +5,36 @@ import styles from './page.module.css'
 import db from '../Database/db'
 const bcrypt = require("bcryptjs")
 import { useRouter } from 'next/navigation'
- const page = () =>{
-    const inputRef = useRef(null);
-    const Router = useRouter()
 
-    // Part To Store Values of fields
-    const [value1,changevalue1] = useState("")
-    const [value2,changevalue2] = useState("")
-    const [value3,changevalue3] = useState("")
-
-    const inputRef1 = useRef(null);
-  const inputRef2 = useRef(null);
-  const inputRef3 = useRef(null);
-
+// Component for adding tech 
+const Tech = () =>{
     var [arr,changearr] = useState([])
-    const [alert,changealert] = useState("")
-    const [switchs,changeswitch] = useState("login")
+    var [textarr,changetextarr] = useState([])
     // Function To Make Array and add buttons 
     const addTech = (event) =>{
-       if (event.key == "Enter"){
-        const prevarr = arr 
-        const newinput = {index:arr.length ,value:event.target.value}
-        changearr([...arr,newinput])
-        
-        
-       }
-    }
-    // To Check Whether Developer Logout or not 
-    useEffect(()=>{
-        if (inputRef1.current) {
-            inputRef1.current.focus();
-          }
-        const Email = window.localStorage.getItem("Email")
-        if (Email == undefined){
-            changeswitch("login")
+        if (event.key == "Enter"){
+        const value = document.getElementById("tech").value
+        const storedkey = window.localStorage.getItem("arr")
+        var newkey ;
+        if (storedkey != undefined){
+            newkey = storedkey + "~" + value 
+        } 
+        if (storedkey == undefined){
+            newkey = value
         }
-        if (Email != undefined){
-            changeswitch("success")
-        }
-    },[])
 
-    // handle Change 
-    const handlechange = (event) =>{
-        if (event.target.id == styles.EnterTech1){
-            changevalue1(event.target.value)
+        window.localStorage.setItem("arr",newkey)
+        const prevarr = arr 
+        const newinput = {index:arr.length ,value:value}
+        changetextarr([...textarr,value])
+        changearr([...arr,newinput])
+
+        document.getElementById("tech").value = ''
+        
         }
-        if (event.target.id == styles.EnterTech2){
-            changevalue2(event.target.value)
-        }
-        if (event.target.id == styles.EnterTech3){
-            changevalue3(event.target.value)
-        }
+        
+       
     }
-    const handleBlur = ()=>{
-        console.log("jaopfpoa")
-    }
-    
     // Card 
     const Cards = () =>{
 
@@ -69,7 +43,12 @@ import { useRouter } from 'next/navigation'
         const index = event.target.id
         const refarr = arr 
         refarr[index] = undefined
+        textarr[index] = "NOTHING123"
         changearr([...refarr])
+        const newarr = [...textarr]
+        const text = newarr.join("~")
+        window.localStorage.setItem('arr',text)
+        
         
        
     } 
@@ -82,6 +61,28 @@ import { useRouter } from 'next/navigation'
                        </div>
         )
     }
+    return (
+        <div id = {styles.TechnoDiv}>
+                       <input onKeyPress={addTech} id = "tech" type = "text" placeholder = "Enter The Technology Used" />
+                       <Cards/>
+                       </div>
+    )
+}
+ const page = () =>{
+    const Router = useRouter()
+    const [switchs,changeswitch] = useState("login")
+    // To Check Whether Developer Logout or not 
+    useEffect(()=>{
+        const Email = window.localStorage.getItem("Email")
+        if (Email == undefined){
+            changeswitch("login")
+        }
+        if (Email != undefined){
+            changeswitch("success")
+        }
+    },[])
+
+   
 
     // Function To Check Login 
     const Login =  async() =>{
@@ -127,6 +128,24 @@ import { useRouter } from 'next/navigation'
     }
     }
 
+    // Testing 
+    const test = () =>{
+        const encrpttext = window.localStorage.getItem("arr")
+        const arr = encrpttext.split("~")
+        const Details = {
+            Name:document.getElementById(styles.EnterTech2).value,
+            Link:document.getElementById(styles.EnterTech3).value,
+            Arr:arr
+        }
+        console.log(Details)
+    }
+
+    // Function To GetCall When i press Enter 
+    const Enter = (event) =>{
+       if (event.key == "Enter"){
+        Login()
+       }
+    }
     //click the file input 
     const click = () =>{
         document.getElementById(styles.hiddenupload).click()
@@ -159,7 +178,7 @@ import { useRouter } from 'next/navigation'
                 <div id = {styles.LoginDiv}>
                     <p id = "alert">alert:{alert}</p>
                     <input id = "Email" type = "text" placeholder = "Enter The Email : " />
-                    <input id = "Password" type = "text" placeholder = "Enter The Password" />
+                    <input onKeyPress={Enter} id = "Password" type = "text" placeholder = "Enter The Password" />
                     <button onClick = {Login}>Login</button>
                 </div>
             )
@@ -169,7 +188,7 @@ import { useRouter } from 'next/navigation'
                 <div id = {styles.AddDiv}>
                     <button id = {styles.Clear}>🧹Clear</button>
                     <div id = {styles.TechDiv}>
-                        <input   ref={inputRef1} onChange={handlechange}  id = {styles.EnterTech1} value = {value1} type = "text" placeholder = "Enter The Technology" />
+                        <input    id = {styles.EnterTech1}  type = "text" placeholder = "Enter The Technology" />
                     <button name = "Technologies"  onClick={update}>Add</button>
                     </div>
                     <h2>OR</h2>
@@ -177,14 +196,11 @@ import { useRouter } from 'next/navigation'
                         <label>Project</label>
                         <button onClick={click} id = {styles.upload}>upload a Image </button>
                         <button onClick={preview} id = {styles.upload2}>preview</button>
-                        <input ref={inputRef2}  onChange={handlechange} value = {value2} id = {styles.EnterTech2} type = "text" placeholder = "Name of Project" />
-                        <input   ref={inputRef3} onChange={handlechange} value = {value3} id = {styles.EnterTech3} type = "text" placeholder = "Link of Project"/>
+                        <input  id = {styles.EnterTech2} type = "text" placeholder = "Name of Project" />
+                        <input    id = {styles.EnterTech3} type = "text" placeholder = "Link of Project"/>
                       
-                       <div id = {styles.TechnoDiv}>
-                       <input onKeyPress = {addTech} type = "text" placeholder = "Enter The Technology Used" />
-                       <Cards/>
-                       </div>
-                       <button name = "Projects" onClick={update} id = {styles.AddBtn}>
+                       <Tech/>
+                       <button onClick={test} name = "Projects"  id = {styles.AddBtn}>
                         Add
                        </button>
                     </div>
