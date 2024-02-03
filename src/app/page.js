@@ -43,7 +43,7 @@ export default function Home() {
       )
     }
     return (
-      <div id = {styles.Card}>
+     <>
         <a href = {props.Link}>
       <div id = {styles.Project}>
         
@@ -57,7 +57,7 @@ export default function Home() {
       </div>
     </div>
     </a>
-    </div>
+    </>
     )
   }
   // Function to Fetch Projects Data 
