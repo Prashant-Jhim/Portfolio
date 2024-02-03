@@ -108,7 +108,7 @@ export default function Home() {
       <button onClick={options} id = {styles.Optbtn}>{opttext}</button>
       <button onClick={focus} name = "project" id = {styles.deskbtn1}>Projects</button>
       <button onClick={focus} name = "about" id = {styles.deskbtn2}>About</button>
-      <button id = {styles.deskbtn3}>GitHub</button>
+      <button id = {styles.deskbtn3}><a href = "https://github.com/Prashant-Jhim">GitHub</a></button>
     </div>
     
     <div id = {styles.About}>
