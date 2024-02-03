@@ -1,11 +1,18 @@
 "use client"
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
 import Head from 'next/head'
+import {addDoc,updateDoc,doc, collection,getDocs,query,where} from 'firebase/firestore'
+import {getFirestore} from "@firebase/firestore"
+import app from './Database/db'
 export default function Home() {
   const [src,changesrc] = useState("https://firebasestorage.googleapis.com/v0/b/chatapp-d6de4.appspot.com/o/images%2FIMG_2950.jpeg%20%2B%20hahflahflh?alt=media&token=8cef615b-a483-43ae-99b7-0d8a11b39600")
   const Router = useRouter()
+  // Database reference 
+  const db = getFirestore(app)
+  const [arrofproj,changeprojarr] = useState([])
+  const colref = collection(db,'projects')
   const [opttext,changetext] = useState("Options")
   //function to get the div into focus 
   const focus = (event) =>{
@@ -22,6 +29,50 @@ export default function Home() {
       changetext("Options")
     }
   }
+
+  // Card Component for Project Card 
+  const ProjectCard = (props) =>{
+    const arr = props.arr 
+
+    // Map the Technologies
+    const nestedcard = (data) =>{
+      return (
+        <>
+          <li>{data}</li>
+        </>
+      )
+    }
+    return (
+      <div id = {styles.Card}>
+        <a href = {props.Link}>
+      <div id = {styles.Project}>
+        
+      <img src = {props.src} />
+      <div id = {styles.ProjectDetails}>
+        <h1>{props.Name}</h1>
+        <p>Technologies</p>
+       <ul>
+        {arr.map(nestedcard)}
+       </ul>
+      </div>
+    </div>
+    </a>
+    </div>
+    )
+  }
+  // Function to Fetch Projects Data 
+  const FetchProjects = async() =>{
+    const doc = await getDocs(colref)
+    const arr = doc.docs.map((snapshot)=>({...snapshot.data(),id:snapshot.id}))
+    changeprojarr(arr)
+
+    console.log(arrofproj)
+  }
+
+  // UseEffect to call Function 
+  useEffect(()=>{
+    FetchProjects()
+  },[])
   // Function To Open options Tab 
   const options = () =>{
     if (opttext == "Options"){
@@ -91,48 +142,9 @@ export default function Home() {
       <div id = {styles.ProjectList}>
 
 
-        <div id = {styles.Project}>
-          <img src = "https://firebasestorage.googleapis.com/v0/b/chatapp-d6de4.appspot.com/o/images%2FScreenshot%202024-01-20%20at%201.45.47%E2%80%AFPM.png?alt=media&token=0d1e5ff6-679b-4ac8-a0aa-d28b0e79ed80" />
-          <div id = {styles.ProjectDetails}>
-            <h1>ChatApp</h1>
-            <p>Technologies</p>
-            <ul>
-              <li>ReactJS</li>
-              <li>MongoDB</li>
-              <li>ExpressJS</li>
-              <li>NodeJS</li>
-            </ul>
-          </div>
-        </div>
+       {arrofproj.map((data)=>(<ProjectCard Link ={data.Link} Name = {data.Name} src={data.Imgsrc} arr = {data.Arr}/>))}
 
-        <div id = {styles.Project}>
-          <img src = "https://firebasestorage.googleapis.com/v0/b/chatapp-d6de4.appspot.com/o/images%2FScreenshot%202024-01-20%20at%201.45.47%E2%80%AFPM.png?alt=media&token=0d1e5ff6-679b-4ac8-a0aa-d28b0e79ed80" />
-          <div id = {styles.ProjectDetails}>
-            <h1>ChatApp</h1>
-            <p>Technologies</p>
-            <ul>
-              <li>ReactJS</li>
-              <li>MongoDB</li>
-              <li>ExpressJS</li>
-              <li>NodeJS</li>
-            </ul>
-          </div>
-        </div>
-        <div id = {styles.Project}>
-          <img src = "https://firebasestorage.googleapis.com/v0/b/chatapp-d6de4.appspot.com/o/images%2FScreenshot%202024-01-20%20at%201.45.47%E2%80%AFPM.png?alt=media&token=0d1e5ff6-679b-4ac8-a0aa-d28b0e79ed80" />
-          <div id = {styles.ProjectDetails}>
-            <h1>ChatApp</h1>
-            <p>Technologies</p>
-            <ul>
-              <li>ReactJS</li>
-              <li>MongoDB</li>
-              <li>ExpressJS</li>
-              <li>NodeJS</li>
-            </ul>
-          </div>
-        </div>
-
-
+       
       </div>
     </div>
     

@@ -1,8 +1,10 @@
 "use client"
-import {collection,getDocs,query,where} from 'firebase/firestore'
+import {getFirestore} from "@firebase/firestore"
+import {getStorage,getDownloadURL, ref, uploadBytes} from 'firebase/storage'
+import {addDoc,updateDoc,doc, collection,getDocs,query,where} from 'firebase/firestore'
 import {useState,useEffect,useRef} from 'react'
 import styles from './page.module.css'
-import db from '../Database/db'
+import app from '../Database/db'
 const bcrypt = require("bcryptjs")
 import { useRouter } from 'next/navigation'
 
@@ -70,6 +72,15 @@ const Tech = () =>{
 }
  const page = () =>{
     const Router = useRouter()
+    // Firestorage Reference 
+    const storage =  getStorage(app)
+    // Firestore Reference 
+    const db = getFirestore(app)
+    // Collection References
+    const colref = collection(db,'users')
+    const colref2 = collection(db,"projects")
+
+    // Switches for changing the tab
     const [switchs,changeswitch] = useState("login")
     // To Check Whether Developer Logout or not 
     useEffect(()=>{
@@ -82,11 +93,13 @@ const Tech = () =>{
         }
     },[])
 
+    // To Store Img Ref
+    const [ImgRef,ChangeImgRef] = useState(undefined)
+
    
 
     // Function To Check Login 
     const Login =  async() =>{
-        const colref = collection(db,'users')
         const Email = document.getElementById("Email").value 
         const Password = document.getElementById("Password").value 
         const q = query(colref,where("Email","==",Email))
@@ -115,6 +128,7 @@ const Tech = () =>{
     // Function to preview image upload 
     const prevorupload = (event) =>{
         const file = event.target.files;
+        ChangeImgRef(file[0])
         if (file) {
         const fileReader = new FileReader();
         const preview = document.getElementById('preview');
@@ -128,15 +142,44 @@ const Tech = () =>{
     }
     }
 
-    // Testing 
-    const test = () =>{
+    // Add new Learned technologies
+    const NewTech = async() =>{
+        const value = document.getElementById(styles.EnterTech1).value
+        const Email = window.localStorage.getItem("Email")
+        const q = query(colref,where("Email","==",Email))
+        const Data = await getDocs(q)
+        const Arr = Data.docs.map((snapshot)=>{
+            return {data:snapshot.data(),id:snapshot.id}})
+      
+        const PreArr = Arr[0].data.Technologies
+        const NewArr = [...PreArr,value]
+
+        const docupd = doc(db,"users",Arr[0].id)
+        
+        const Verfied = {Technologies:[NewArr]}
+        const Update = await updateDoc(docupd,Verfied)
+        console.log(Update)
+
+    }
+
+    // Adding Project in Database
+    const AddProject = async() =>{
+
+        const upload = ImgRef
+        const imgref = ref(storage,`images/${upload.name} + hahflahflh`)
+        const upld = await uploadBytes(imgref,upload)
+        const url = await getDownloadURL(upld.ref)
+
+
         const encrpttext = window.localStorage.getItem("arr")
         const arr = encrpttext.split("~")
-        const Details = {
+        const Details = await addDoc(colref2,{
             Name:document.getElementById(styles.EnterTech2).value,
             Link:document.getElementById(styles.EnterTech3).value,
-            Arr:arr
-        }
+            Arr:arr,
+            Imgsrc : url
+        })
+        window.localStorage.removeItem("arr")
         console.log(Details)
     }
 
@@ -169,7 +212,12 @@ const Tech = () =>{
     // Function to preview the image 
     const preview = () =>{
         document.getElementById("preview").style.display= "flex"
-        changeswitch("image")
+        document.getElementById(styles.AddDiv).style.display= "none"
+       
+    }
+    const closepreview = () =>{
+        document.getElementById("preview").style.display= "none"
+        document.getElementById(styles.AddDiv).style.display= "flex"
     }
     // filter to add card in adding technologies part 
     const Card= () =>{
@@ -189,7 +237,7 @@ const Tech = () =>{
                     <button id = {styles.Clear}>🧹Clear</button>
                     <div id = {styles.TechDiv}>
                         <input    id = {styles.EnterTech1}  type = "text" placeholder = "Enter The Technology" />
-                    <button name = "Technologies"  onClick={update}>Add</button>
+                    <button name = "Technologies"  onClick={NewTech}>Add</button>
                     </div>
                     <h2>OR</h2>
                     <div id = {styles.ProjectDiv}>
@@ -200,7 +248,7 @@ const Tech = () =>{
                         <input    id = {styles.EnterTech3} type = "text" placeholder = "Link of Project"/>
                       
                        <Tech/>
-                       <button onClick={test} name = "Projects"  id = {styles.AddBtn}>
+                       <button onClick={AddProject} name = "Projects"  id = {styles.AddBtn}>
                         Add
                        </button>
                     </div>
@@ -227,7 +275,7 @@ const Tech = () =>{
         <button onClick = {Back} id = {styles.Back}>⏪ Back</button>
         <h1>Prashant Jhim👨🏻‍💻</h1>
         <div id = {styles.imgdiv}>
-                    <img id = "preview" src = "" />
+                    <img onClick={closepreview} id = "preview" src = "" />
                 </div>
         <Card />
     </div>
