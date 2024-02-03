@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 const Tech = () =>{
     var [arr,changearr] = useState([])
     var [textarr,changetextarr] = useState([])
+    
     // Function To Make Array and add buttons 
     const addTech = (event) =>{
         if (event.key == "Enter"){
@@ -72,6 +73,7 @@ const Tech = () =>{
 }
  const page = () =>{
     const Router = useRouter()
+    const [alert,changealert] = useState("")
     // Firestorage Reference 
     const storage =  getStorage(app)
     // Firestore Reference 

@@ -99,7 +99,7 @@ export default function Home() {
    <div id = {styles.Options}>
       <button onClick={focus} name = "project" >Projects</button>
       <button onClick={focus} name = "about">About</button>
-      <button >GitHub</button>
+      <button id = {styles.deskbtn3mob} ><a href = "https://github.com/Prashant-Jhim">GitHub</a></button>
    </div>
     <div id = {styles.NavDiv}>
       <h1 onClick = {Login}>
