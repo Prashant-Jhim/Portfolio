@@ -163,7 +163,12 @@ const Tech = () =>{
     const [ImgRef,ChangeImgRef] = useState(undefined)
 
    
-
+    // Function To Clear The all Input 
+    const Clear = () =>{
+        document.getElementById(styles.EnterTech1).value = ''
+        document.getElementById(styles.EnterTech2).value = ''
+        document.getElementById(styles.EnterTech3).value = ''
+    }
     // Function To Check Login 
     const Login =  async() =>{
         const Email = document.getElementById("Email").value 
@@ -308,7 +313,7 @@ const Tech = () =>{
         if (switchs == "success"){
             return (
                 <div id = {styles.AddDiv}>
-                    <button id = {styles.Clear}>🧹Clear</button>
+                    <button onClick={Clear} id = {styles.Clear}>🧹Clear</button>
                     <div id = {styles.TechDiv}>
                        <Skill/>
                     <button onClick={AddSkill} id = {styles.addbtn1} name = "Technologies"  >Add</button>
