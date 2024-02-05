@@ -132,7 +132,6 @@
 #Project{
   border: 1px solid black;
   padding: 20px;
-  position: relative;
   border-radius: 5px;
   display: flex;
   box-shadow: 4px 4px gray;
