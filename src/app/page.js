@@ -3,6 +3,7 @@ import {useState,useEffect} from 'react'
 import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
 import Head from 'next/head'
+
 import {addDoc,updateDoc,doc, collection,getDocs,query,where} from 'firebase/firestore'
 import {getFirestore} from "@firebase/firestore"
 import app from './Database/db'
@@ -47,7 +48,7 @@ export default function Home() {
         <a href = {props.Link}>
       <div id = {styles.Project}>
         
-      <img src = {props.src} />
+      <img alt = "afj;a;jfa" src = {props.src} />
       <div id = {styles.ProjectDetails}>
         <h1>{props.Name}</h1>
         <p>Technologies</p>

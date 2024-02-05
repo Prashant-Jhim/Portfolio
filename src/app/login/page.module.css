@@ -126,13 +126,28 @@
 }
 #TechDiv{
    justify-content: center;
+   align-items: center;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
     width: 100%;
     margin-bottom: 10px;
 }
-#TechDiv button{
+#TechBtns{
+    display: flex;
+    flex-direction: row;
+}
+#TechBtns button{
+    border: 0px;
+    min-width: 100px;
+    background-color: white;
+    font-size: 15px;
+    min-height: 30px;
+}
+#TechDiv input {
+    max-width: 500px;
+}
+#addbtn1{
     min-width: 100px;
     min-height: 50px;
     font-size: 20px;
@@ -141,7 +156,7 @@
     border-radius: 10px;
     box-shadow: 2px 2px gray;
 }
-#TechDiv button:active{
+#addbtn1:active{
     box-shadow: 1px 1px gray;
     transform: translateY(2px);
 }

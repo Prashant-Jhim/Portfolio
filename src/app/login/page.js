@@ -8,6 +8,69 @@ import app from '../Database/db'
 const bcrypt = require("bcryptjs")
 import { useRouter } from 'next/navigation'
 
+// Componect For Adding New Skill
+const Skill = () =>{
+    var [arr,changearr] = useState([])
+    const [textvalue,changetextvalue] = useState([])
+    
+    // Function To Add Skills 
+    const AddSkill = (event) =>{
+        if (event.key == "Enter"){
+        const value = document.getElementById(styles.EnterTech1).value 
+        const savedvalue = window.localStorage.getItem("skills")
+        console.log(savedvalue)
+        if (savedvalue == undefined){
+            window.localStorage.setItem("skills",value)
+        }
+        if (savedvalue != undefined){
+            const newvalue = savedvalue + '~' + value
+            console.log(newvalue)
+            window.localStorage.setItem("skills",newvalue)
+        }
+        const arrlength = arr.length
+        const textdetails = [...textvalue,value]
+        const details = [...arr,{name:value,index:arrlength}]
+        changearr(details)
+        console.log(details)
+        changetextvalue(textdetails)
+        document.getElementById(styles.EnterTech1).value = ''
+
+
+        }
+    }
+     // Function to delete skill 
+     const DelCard = () =>{
+        const index = event.target.id
+        const refarr = arr 
+        refarr[index] = undefined
+        textvalue[index] = "NOTHING123"
+        changearr([...refarr])
+        const newarr = [...textvalue]
+        changetextvalue(newarr)
+        const text = newarr.join("~")
+        window.localStorage.setItem('skills',text)
+        } 
+    const card = (data) =>{
+       
+        return (
+            <>
+            
+            </>
+        )
+    }
+    return (
+        <>
+        <input onKeyPress={AddSkill}   id = {styles.EnterTech1}  type = "text" placeholder = "Enter The Technology" />
+        <div id = {styles.TechBtns}>
+            {arr.map((data)=>{
+                if (data != undefined){
+                return (<button onClick={DelCard} id={data.index} >X {data.name}</button>)
+                }
+            })}
+        </div>
+        </>
+    )
+}
 // Component for adding tech 
 const Tech = () =>{
     var [arr,changearr] = useState([])
@@ -81,6 +144,7 @@ const Tech = () =>{
     // Collection References
     const colref = collection(db,'users')
     const colref2 = collection(db,"projects")
+    const colref3 = collection(db,'skills')
 
     // Switches for changing the tab
     const [switchs,changeswitch] = useState("login")
@@ -163,10 +227,18 @@ const Tech = () =>{
         console.log(Update)
 
     }
-
+    // Adding Skill In Database 
+    const AddSkill = async() =>{
+        const savedtext = window.localStorage.getItem('skills')
+        const arr = savedtext.split("~")
+        const Details = await addDoc(colref3,{
+            ArrofSkills:arr
+        })
+        window.localStorage.removeItem("skills")
+        console.log(Details)
+    }
     // Adding Project in Database
     const AddProject = async() =>{
-
         const upload = ImgRef
         const imgref = ref(storage,`images/${upload.name} + hahflahflh`)
         const upld = await uploadBytes(imgref,upload)
@@ -238,8 +310,8 @@ const Tech = () =>{
                 <div id = {styles.AddDiv}>
                     <button id = {styles.Clear}>🧹Clear</button>
                     <div id = {styles.TechDiv}>
-                        <input    id = {styles.EnterTech1}  type = "text" placeholder = "Enter The Technology" />
-                    <button name = "Technologies"  onClick={NewTech}>Add</button>
+                       <Skill/>
+                    <button onClick={AddSkill} id = {styles.addbtn1} name = "Technologies"  >Add</button>
                     </div>
                     <h2>OR</h2>
                     <div id = {styles.ProjectDiv}>
